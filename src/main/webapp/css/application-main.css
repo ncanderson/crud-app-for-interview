@@ -1,0 +1,14 @@
+@import url("image.css");
+@import url("bootstrap-override.css");
+@import url("header-footer.css");
+@import url("centered-input-form.css");
+
+html {
+  height: 100%;
+}
+
+body {
+	min-height: 100%;
+  	display: flex;
+  	flex-direction: column;
+}

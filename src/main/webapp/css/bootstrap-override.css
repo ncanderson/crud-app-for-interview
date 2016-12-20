@@ -1,0 +1,15 @@
+.container-fluid {
+	padding: 0px;
+	margin: 0px;
+  	flex: 1;
+  	padding-bottom: 20px;
+}
+
+nav {
+	border: 0px;
+	border-radius: 0;
+}
+
+div.jumbotron {
+	overflow: hidden;
+}
