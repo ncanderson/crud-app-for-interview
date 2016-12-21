@@ -10,8 +10,8 @@
 			<form method="POST" action="login">
 				<ul class="form-flex-outer">
 					<li>
-						<label for="userName">Username: </label>
-						<input type="text" name="userName" /><br />
+						<label for="username">Username: </label>
+						<input type="text" name="username" /><br />
 					</li>
 					<li>
 						<label for="password">Password: </label>

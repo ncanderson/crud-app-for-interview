@@ -36,10 +36,11 @@ public class AuthenticationController {
 			session.invalidate();
 			
 			model.put("currentUser", user);
+			
+			return "redirect:/user-home";
 		}
 		
-		
-		return "redirect:/user-home";
+		return "redirect:/home";
 	}
 	
 }

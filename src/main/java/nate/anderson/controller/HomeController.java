@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
-
-//	@Autowired
-	public HomeController() {
-		
-	}
 	
 	@RequestMapping(path={"/", "/home"}, method=RequestMethod.GET)
 	public String getHomePage() {
@@ -20,6 +15,7 @@ public class HomeController {
 	
 	@RequestMapping(path="/login", method=RequestMethod.GET) 
 	public String login() {
+		
 		return "login";
 	}
 	

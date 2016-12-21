@@ -6,7 +6,6 @@ public interface UserDAO {
 
 	public User getUserByCredentials(String username, String password);
 	
-	public void createNewUser();
-	
+	public void createNewUser(User user);
 	
 }

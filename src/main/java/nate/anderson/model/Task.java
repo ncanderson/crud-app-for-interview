@@ -1,6 +1,7 @@
 package nate.anderson.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Task {
 
@@ -10,7 +11,14 @@ public class Task {
 	private String taskName;
 	private LocalDate createAt;
 	private LocalDate updatedAt;
+	private List<TaskEntry> taskEntries;
 	
+	public List<TaskEntry> getTaskEntries() {
+		return taskEntries;
+	}
+	public void setTaskEntries(List<TaskEntry> taskEntries) {
+		this.taskEntries = taskEntries;
+	}
 	public int getTaskId() {
 		return taskId;
 	}

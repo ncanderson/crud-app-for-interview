@@ -1,6 +1,7 @@
 package nate.anderson.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Project {
 		
@@ -9,7 +10,14 @@ public class Project {
 	private int customerId;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
+	private List<Task> projectTasks;
 	
+	public List<Task> getProjectTasks() {
+		return projectTasks;
+	}
+	public void setProjectTasks(List<Task> projectTasks) {
+		this.projectTasks = projectTasks;
+	}
 	public int getProjectId() {
 		return projectId;
 	}

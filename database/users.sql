@@ -21,3 +21,5 @@ TO app_user;
 GRANT USAGE, SELECT
 ON ALL SEQUENCES IN SCHEMA public
 TO app_user;
+
+INSERT INTO users (username, password, email, created_at, updated_at) VALUES ('admin', 'admin', 'email@admin.com', NOW(), NOW());

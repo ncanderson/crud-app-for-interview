@@ -5,7 +5,7 @@
 </div> <!-- end of container fluid -->
 
 <div class="footer">
-	<h1>FOOTER</h1>
+	<h1>Co-op data model</h1>
 </div>
 
 </body>
