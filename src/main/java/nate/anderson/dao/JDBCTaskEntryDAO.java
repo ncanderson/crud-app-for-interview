@@ -113,7 +113,11 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 	
 	private double calculateDurationInMinutes(LocalDateTime start, LocalDateTime end) {
 		
-		return (start.until(end, ChronoUnit.SECONDS)) / 3600;
+		long seconds = start.until(end, ChronoUnit.SECONDS);
+		
+		double elapsed = seconds / 3600.0;
+		
+		return elapsed;
 	}
 }
 
