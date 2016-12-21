@@ -42,12 +42,12 @@
 		<property name="url" value="jdbc:postgresql://localhost:5432/cmm" />
 		<property name="username" value="app_owner" />
 		<property name="password" value="app_owner1" />
-		
+		<!-- <property name="defaultAutoCommit" value="false" />  -->
 	</bean>
 	
     <!-- enable the configuration of transactional behavior based on annotations -->
-    <tx:annotation-driven transaction-manager="txManager"/>
+	<!-- <tx:annotation-driven transaction-manager="txManager"/>
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
+    </bean> -->
 </beans>

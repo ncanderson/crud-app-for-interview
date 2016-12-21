@@ -18,6 +18,12 @@
 			<c:url var="viewCustomers" value="/view-customers" />
 			<li><a href="${ viewCustomers }">View Customers</a></li>
 			
+			<c:url var="newProject" value="/new-project" />
+			<li><a href="${ newProject }">New Project</a></li>
+			
+			<c:url var="newCustomer" value="/new-customer" />
+			<li><a href="${ newCustomer }">New Customer</a></li>
+			
 		</ul>
 
 	</div>

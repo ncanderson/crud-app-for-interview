@@ -3,6 +3,7 @@ package nate.anderson.model;
 import java.time.LocalDate;
 
 public class User {
+	
 	private int userId;
 	private String username;
 	private String password;

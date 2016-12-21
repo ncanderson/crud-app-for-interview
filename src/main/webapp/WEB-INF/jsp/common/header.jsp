@@ -10,19 +10,24 @@
 	<c:url var="jQueryJS" value="/js/jquery.min.js" />
 	<script src="${jQueryJS}"></script>
 	
+	<c:url var="jQueryValidateJS" value="/js/jquery.validate.min.js" />
+	<script src="${ jQueryValidateJS }"></script>
+	
 	<c:url var="bootstrapJS" value="/js/bootstrap.min.js"/>	
 	<script src="${bootstrapJS}"></script>
 	
 	<c:url var="bootstrapCSS" value="/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="${bootstrapCSS}" />
 	
+	<c:url var="formValidationJS" value="/js/form-validation.js" />
+	<script src="${ formValidationJS }"></script>
+
 	<c:url var="mainJS" value="/js/application-main.js" />
-	<script src="${mainJS}"></script>
+	<script src="${ mainJS }"></script>
 	
 	<c:url var="mainCSS" value="/css/application-main.css" />
 	<link rel="stylesheet" href="${mainCSS}" />
-	
-	
+		
 </head>
 
 <body>
@@ -49,18 +54,23 @@
 	    </div>
 	    
 	    <c:url var="login" value="/login"/>
+	    <c:url var="sign-up" value="/sign-up"/>
 	    
 	    <div class="collapse navbar-collapse dropdown-menu-right" id="navbar-collapse-1">
 	    	<ul class="nav navbar-nav" id="main-nav">
 	    		<li class="active"><a href="${homePage}">Home <span class="sr-only">(current)</span></a></li>
 	    		<c:choose>
 		    		<c:when test="${empty currentUser}">
-			    		<li><a href="${login}">Login</a></li>
-			    		<li><a href="#">Sign Up</a></li>
+			    		<li><a href="${ login }">Login</a></li>
+			    		<li><a href="sign-up">Sign Up</a></li>
 			    		<li><a href="#">About</a></li>
 			    	</c:when>
 			    	<c:otherwise>
-			    		<li><a href="#">Logout</a></li>
+						<c:url var="logoutAction" value="/logout" />
+						<form id="logoutForm" action="${ logoutAction }" method="POST">
+							<input type="hidden" name="CSRF_TOKEN" value="${ CSRF_TOKEN }" />
+						</form>
+						<li><a id="logoutLink" href="#">Log Out</a></li>
 			    		<li><a href="#">View Your Tasks</a></li>
 			    		<li><a href="#">About</a></li>
 			    	</c:otherwise>

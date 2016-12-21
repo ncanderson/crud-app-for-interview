@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,6 +54,39 @@ public class UserController {
 	public String updateUserInformation() {
 		
 		return "update-user";
+	}
+	
+	@RequestMapping(path="/update-user", method=RequestMethod.POST)
+	public String submitUpdatedUserInformation(User user, ModelMap model) {
+		
+		int userId = user.getUserId();
+		
+		userDAO.updateUserInformation(user);
+		
+		user = userDAO.getUserById(userId);
+		
+		model.put("currentUser", user);
+		
+		return "redirect:/user-home";
+	}
+	
+	@RequestMapping(path="/sign-up", method=RequestMethod.POST)
+	public String createNewUser(@RequestParam String username,
+								@RequestParam String email,
+								@RequestParam String password,
+								ModelMap model) {
+
+		User user = new User();
+		
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(password);
+		
+		userDAO.createNewUser(user);
+		
+		model.put("currentUser", user);
+		
+		return "redirect:/user-home";
 	}
 	
 	@RequestMapping(path="/view-project-details", method=RequestMethod.GET)

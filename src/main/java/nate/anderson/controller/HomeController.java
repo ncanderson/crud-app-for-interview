@@ -2,6 +2,7 @@ package nate.anderson.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,8 +16,12 @@ public class HomeController {
 	
 	@RequestMapping(path="/login", method=RequestMethod.GET) 
 	public String login() {
-		
 		return "login";
+	}
+	
+	@RequestMapping(path="/sign-up", method=RequestMethod.GET)
+	public String signUp() {
+		return "sign-up";
 	}
 	
 }
