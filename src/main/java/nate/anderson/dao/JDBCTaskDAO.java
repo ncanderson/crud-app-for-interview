@@ -62,7 +62,17 @@ public class JDBCTaskDAO implements TaskDAO {
 		
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, id);
 		
-		return mapResultsToTask(results).get(0);
+		Task task = new Task();
+		
+		while (results.next()) {
+			task.setTaskId(results.getInt("task_id"));
+			task.setProjectId(results.getInt("project_id"));
+			task.setUserId(results.getInt("user_id"));
+			task.setTaskName(results.getString("task_name"));
+			task.setCreateAt(results.getDate("created_at").toLocalDate());
+			task.setUpdatedAt(results.getDate("updated_at").toLocalDate());
+		}
+		return task;
 	}
 	
 	private List<Task> mapResultsToTask(SqlRowSet results) {
@@ -77,7 +87,7 @@ public class JDBCTaskDAO implements TaskDAO {
 			task.setCreateAt(results.getDate("created_at").toLocalDate());
 			task.setUpdatedAt(results.getDate("updated_at").toLocalDate());
 		
-			if (results.getString("project_name") != null) {
+			if (results.getString("project_id") != null) {
 				task.setProjectName(results.getString("project_name"));				
 			}
 			taskList.add(task);

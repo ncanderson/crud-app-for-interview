@@ -33,7 +33,7 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 				 		   "FROM task_entries " +
 				 		   "INNER JOIN tasks " +
 				 		   "ON task_entries.task_id = tasks.task_id " +
-				 		   "WHERE task.task_id = ?";
+				 		   "WHERE tasks.task_id = ?";
 		 
 		 SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, task.getTaskId());
 		 
@@ -60,9 +60,15 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		for (TaskEntry taskEntry : taskEntries) {
 			if (timerStarted(taskEntry)) {
 				finishTaskEntry(taskEntry);
+				return;
 			}
 		}
-		String sqlQuery = "";
+		
+		String sqlQuery = "INSERT INTO task_entries " +
+						  "(task_id, start_time, created_at, updated_at) " +
+						  "VALUES (?, NOW(), NOW(), NOW())";
+		
+		jdbcTemplate.update(sqlQuery, task.getTaskId());
 	}
 	
 	private List<TaskEntry> mapResultsToTaskEntry(SqlRowSet results) {
@@ -85,10 +91,10 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 	
 	private boolean timerStarted(TaskEntry taskEntry) {
 		if (taskEntry.getDuration() == 0.0) {
-			return false;
+			return true;
 		}
 		else {
-			return true;
+			return false;
 		}
 	}
 	
@@ -107,7 +113,7 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 	
 	private double calculateDurationInMinutes(LocalDateTime start, LocalDateTime end) {
 		
-		return start.until(end, ChronoUnit.MINUTES);
+		return (start.until(end, ChronoUnit.SECONDS)) / 3600;
 	}
 }
 

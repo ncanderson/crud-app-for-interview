@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import nate.anderson.dao.CustomerDAO;
 import nate.anderson.dao.ProjectDAO;
 import nate.anderson.dao.TaskDAO;
+import nate.anderson.dao.TaskEntryDAO;
 import nate.anderson.dao.UserDAO;
 import nate.anderson.model.Customer;
 import nate.anderson.model.Project;
@@ -31,13 +32,18 @@ public class UserController {
 	private CustomerDAO customerDAO;
 	private ProjectDAO projectDAO;
 	private TaskDAO taskDAO;
+	private TaskEntryDAO taskEntryDAO;
 	
 	@Autowired
-	public UserController(UserDAO userDAO, CustomerDAO customerDAO, ProjectDAO projectDAO, TaskDAO taskDAO) {
+	public UserController(UserDAO userDAO, CustomerDAO customerDAO, 
+						  ProjectDAO projectDAO, TaskDAO taskDAO,
+						  TaskEntryDAO taskEntryDAO) {
+		
 		this.userDAO = userDAO;
 		this.customerDAO = customerDAO;
 		this.projectDAO = projectDAO;
 		this.taskDAO = taskDAO;
+		this.taskEntryDAO = taskEntryDAO;
 	}
 	
 	@RequestMapping(path="/user-home", method=RequestMethod.GET)
@@ -109,6 +115,16 @@ public class UserController {
 		request.setAttribute("detailProject", detailProject);
 		
 		return "view-project-details";
+	}
+	
+	@RequestMapping(path="/start-timer", method=RequestMethod.POST) 
+	public String createEntryForStartTimer(@RequestParam int taskId) {
+		
+		Task task = taskDAO.getTaskById(taskId);
+		
+		taskEntryDAO.createUpdateTaskEntry(task);
+		
+		return "redirect:/user-home";
 	}
 	
 	@RequestMapping(path="/view-customers", method=RequestMethod.GET)

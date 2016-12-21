@@ -55,6 +55,7 @@ CREATE TABLE task_entries (
   task_entries_id int PRIMARY KEY DEFAULT NEXTVAL('seq_task_entries_id'),
   task_id int NOT NULL REFERENCES tasks(task_id),
   duration double precision DEFAULT 0,
+  note varchar(300),
   start_time timestamp,
   created_at timestamp NULL,
   updated_at timestamp 

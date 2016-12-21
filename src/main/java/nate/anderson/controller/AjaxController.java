@@ -13,22 +13,22 @@ import nate.anderson.model.Task;
 @RestController
 public class AjaxController {
 
-	private TaskEntryDAO taskEntryDAO;
-	private TaskDAO taskDAO;
-	
-	@Autowired
-	public AjaxController(TaskEntryDAO taskEntryDAO, TaskDAO taskDAO) {
-		this.taskEntryDAO = taskEntryDAO;
-		this.taskDAO = taskDAO;
-	}
-	
-	@RequestMapping(path="/start-timer", method=RequestMethod.POST) 
-	public void createEntryForStartTimer(@RequestParam int taskId) {
-		
-		Task task = taskDAO.getTaskById(taskId);
-		
-		taskEntryDAO.createUpdateTaskEntry(task);
-		
-	}
+//	private TaskEntryDAO taskEntryDAO;
+//	private TaskDAO taskDAO;
+//	
+//	@Autowired
+//	public AjaxController(TaskEntryDAO taskEntryDAO, TaskDAO taskDAO) {
+//		this.taskEntryDAO = taskEntryDAO;
+//		this.taskDAO = taskDAO;
+//	}
+//	
+//	@RequestMapping(path="/start-timer", method=RequestMethod.POST) 
+//	public void createEntryForStartTimer(@RequestParam int taskId) {
+//		
+//		Task task = taskDAO.getTaskById(taskId);
+//		
+//		taskEntryDAO.createUpdateTaskEntry(task);
+//		
+//	}
 	
 }

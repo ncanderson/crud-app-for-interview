@@ -11,4 +11,22 @@ $(document).ready(function() {
 	    }
 	});
 	
+//	Start timer and make new task_entry when button is clicked
+	
+//	$(".start-timer").click(function() {
+//		this.preventDefault();
+//		
+//		$.ajax ({
+//			url: "start-time?taskId=" + $(this).val(),
+//			type: "POST"
+//			
+//		})
+//		.done(function(data) {
+//			
+//		})
+//		.fail(function(xhr, status, error) {
+//			
+//		});
+//	});
+	
 });
