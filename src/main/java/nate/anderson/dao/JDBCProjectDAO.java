@@ -23,7 +23,18 @@ public class JDBCProjectDAO implements ProjectDAO {
 	public JDBCProjectDAO(DataSource datasource) {
 		this.jdbcTemplate = new JdbcTemplate(datasource);
 	}
-
+	
+	@Override
+	public List<Project> getAllProjects() {
+		
+		String sqlQuery = "SELECT * " +
+						  "FROM projects";
+		
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery);
+		
+		return mapResultsToProject(results);
+	}
+	
 	@Override
 	public List<Project> getProjectsByUser(User user) {
 		
@@ -62,6 +73,16 @@ public class JDBCProjectDAO implements ProjectDAO {
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, task.getProjectId());
 		
 		return mapResultsToProject(results).get(0);
+	}
+	
+	@Override
+	public void addNewProject(String projectName, int customerId) {
+		
+		String sqlQuery = "INSERT INTO projects " +
+						  "(project_name, customer_id, created_at, updated_at) " +
+						  "VALUES (?, ?, NOW(), NOW())";
+		
+		jdbcTemplate.update(sqlQuery, projectName, customerId);
 	}
 	
 	private List<Project> mapResultsToProject(SqlRowSet results) {

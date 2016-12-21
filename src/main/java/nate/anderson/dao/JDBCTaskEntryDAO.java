@@ -115,7 +115,7 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		
 		long seconds = start.until(end, ChronoUnit.SECONDS);
 		
-		double elapsed = seconds / 3600.0;
+		double elapsed = seconds * .016666666;
 		
 		return elapsed;
 	}

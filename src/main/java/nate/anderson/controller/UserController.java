@@ -52,10 +52,10 @@ public class UserController {
 		
 		User user = (User) model.get("currentUser");
 		
-		List<Project> userProjects = projectDAO.getProjectsByUser(user);
+		List<Project> allProjects = projectDAO.getAllProjects();
 		List<Task> userTasks = taskDAO.getTasksByUser(user);
 		
-		request.setAttribute("userProjects", userProjects);
+		request.setAttribute("userProjects", allProjects);
 		request.setAttribute("userTasks", userTasks);
 		
 		return "user-home";
@@ -110,6 +110,15 @@ public class UserController {
 		return "new-project";
 	}
 	
+	@RequestMapping(path="/new-project", method=RequestMethod.POST)
+	public String newProjectUpdate(@RequestParam String projectName,
+								   @RequestParam int customerId) {
+		
+		projectDAO.addNewProject(projectName, customerId);
+		
+		return "redirect:/user-home";
+	}
+	
 	@RequestMapping(path="/view-project-details", method=RequestMethod.GET)
 	public String viewProjects(HttpServletRequest request) {
 		
@@ -142,4 +151,22 @@ public class UserController {
 		return "view-customers";
 	}
 	
+	@RequestMapping(path="/create-new-task", method=RequestMethod.GET)
+	public String createNewTaskView(HttpServletRequest request) {
+		
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		
+		Project project = projectDAO.getProjectById(projectId);
+		
+		request.setAttribute("project", project);
+		
+		return "create-new-task";
+	}
+	
 }
+
+
+
+
+
+

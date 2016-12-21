@@ -14,4 +14,8 @@ public interface ProjectDAO {
 	
 	public Project getProjectByTask(Task task);
 	
+	public void addNewProject(String projectName, int customerId);
+	
+	public List<Project> getAllProjects();
+	
 }
