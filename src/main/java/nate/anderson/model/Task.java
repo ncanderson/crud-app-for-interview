@@ -9,10 +9,17 @@ public class Task {
 	private int projectId;
 	private int userId;
 	private String taskName;
+	private String projectName;
 	private LocalDate createAt;
 	private LocalDate updatedAt;
 	private List<TaskEntry> taskEntries;
 	
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	public List<TaskEntry> getTaskEntries() {
 		return taskEntries;
 	}

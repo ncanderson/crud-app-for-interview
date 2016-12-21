@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import nate.anderson.dao.CustomerDAO;
 import nate.anderson.dao.ProjectDAO;
+import nate.anderson.dao.TaskDAO;
 import nate.anderson.dao.UserDAO;
 import nate.anderson.model.Customer;
 import nate.anderson.model.Project;
@@ -29,12 +30,14 @@ public class UserController {
 	private UserDAO userDAO;
 	private CustomerDAO customerDAO;
 	private ProjectDAO projectDAO;
+	private TaskDAO taskDAO;
 	
 	@Autowired
-	public UserController(UserDAO userDAO, CustomerDAO customerDAO, ProjectDAO projectDAO) {
+	public UserController(UserDAO userDAO, CustomerDAO customerDAO, ProjectDAO projectDAO, TaskDAO taskDAO) {
 		this.userDAO = userDAO;
 		this.customerDAO = customerDAO;
 		this.projectDAO = projectDAO;
+		this.taskDAO = taskDAO;
 	}
 	
 	@RequestMapping(path="/user-home", method=RequestMethod.GET)
@@ -44,8 +47,10 @@ public class UserController {
 		User user = (User) model.get("currentUser");
 		
 		List<Project> userProjects = projectDAO.getProjectsByUser(user);
+		List<Task> userTasks = taskDAO.getTasksByUser(user);
 		
 		request.setAttribute("userProjects", userProjects);
+		request.setAttribute("userTasks", userTasks);
 		
 		return "user-home";
 	}
@@ -87,6 +92,11 @@ public class UserController {
 		model.put("currentUser", user);
 		
 		return "redirect:/user-home";
+	}
+	
+	@RequestMapping(path="/new-projects", method=RequestMethod.GET)
+	public String enterNewProject() {
+		return null;
 	}
 	
 	@RequestMapping(path="/view-project-details", method=RequestMethod.GET)

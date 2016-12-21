@@ -9,4 +9,8 @@ public interface TaskEntryDAO {
 
 	public List<TaskEntry> getTaskEntriesByTask(Task task);
 	
+	public TaskEntry getTaskEntryById(TaskEntry taskEntry);
+	
+	public void createUpdateTaskEntry(Task task);
+
 }

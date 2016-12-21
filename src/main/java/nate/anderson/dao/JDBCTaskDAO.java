@@ -19,19 +19,21 @@ public class JDBCTaskDAO implements TaskDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	private TaskEntryDAO taskEntryDAO;
+	private ProjectDAO projectDAO;
 	
 	@Autowired
 	public JDBCTaskDAO(DataSource datasource) {
-		this.jdbcTemplate = new JdbcTemplate();
-		this.taskEntryDAO = new JDBCTaskEntryDAO(datasource);
+		this.jdbcTemplate = new JdbcTemplate(datasource);
+		taskEntryDAO = new JDBCTaskEntryDAO(datasource);
+		projectDAO = new JDBCProjectDAO(datasource);
 	}
 	
 	@Override
 	public List<Task> getTasksByProject(Project project) {
 		String sqlQuery = "SELECT * " +
 						  "FROM tasks " +
-						  "INNER JOIN projects ON tasks.project_id = project.project_id " +
-						  "WHERE project_id = ?";
+						  "INNER JOIN projects ON tasks.project_id = projects.project_id " +
+						  "WHERE projects.project_id = ?";
 		
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, project.getProjectId());
 		
@@ -42,13 +44,25 @@ public class JDBCTaskDAO implements TaskDAO {
 	public List<Task> getTasksByUser(User user) {
 		String sqlQuery = "SELECT * " +
 						  "FROM tasks " +
-						  "INNER JOIN users " +
-						  "ON users.user_id = tasks.user_id " +
-						  "WHERE user.user_id = ?";
+						  "INNER JOIN users ON users.user_id = tasks.user_id " +
+						  "INNER JOIN projects ON projects.project_id = tasks.task_id " +
+						  "WHERE users.user_id = ?";
 		
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, user.getUserId());
 			
 		return mapResultsToTask(results);
+	}
+	
+	@Override
+	public Task getTaskById(int id) {
+		
+		String sqlQuery = "SELECT * " + 
+						  "FROM tasks " +
+						  "WHERE task_id =?";
+		
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, id);
+		
+		return mapResultsToTask(results).get(0);
 	}
 	
 	private List<Task> mapResultsToTask(SqlRowSet results) {
@@ -60,9 +74,12 @@ public class JDBCTaskDAO implements TaskDAO {
 			task.setProjectId(results.getInt("project_id"));
 			task.setUserId(results.getInt("user_id"));
 			task.setTaskName(results.getString("task_name"));
-			task.setCreateAt(results.getDate("created_ad").toLocalDate());
+			task.setCreateAt(results.getDate("created_at").toLocalDate());
 			task.setUpdatedAt(results.getDate("updated_at").toLocalDate());
-			task.setTaskEntries(taskEntryDAO.getTaskEntriesByTask(task));
+		
+			if (results.getString("project_name") != null) {
+				task.setProjectName(results.getString("project_name"));				
+			}
 			taskList.add(task);
 		}
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.bcel.generic.GETSTATIC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -37,6 +38,26 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		return mapResultsToTaskEntry(results);
 	}
 	
+	@Override
+	public TaskEntry getTaskEntryById(TaskEntry taskEntry) {
+		
+		String sqlQuery = "SELECT * " +
+						  "FROM task_entries " +
+						  "WHERE task_entries_id = ?";
+		
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlQuery, taskEntry.getTaskEntryId());
+		
+		return mapResultsToTaskEntry(results).get(0);
+	}
+	
+	@Override
+	public void createUpdateTaskEntry(Task task) {
+		
+		List<TaskEntry> taskEntries = getTaskEntriesByTask(task);
+		
+		String sqlQuery = "";
+	}
+	
 	private List<TaskEntry> mapResultsToTaskEntry(SqlRowSet results) {
 		List<TaskEntry> taskEntries = new ArrayList<TaskEntry>();
 		
@@ -55,4 +76,20 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		return taskEntries;
 	}
 	
+	private boolean timerStarted(TaskEntry taskEntry) {
+		if (taskEntry.getDuration() == 0.0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }
+
+
+
+
+
+
+
+

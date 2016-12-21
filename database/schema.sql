@@ -54,10 +54,17 @@ CREATE SEQUENCE seq_task_entries_id;
 CREATE TABLE task_entries (
   task_entries_id int PRIMARY KEY DEFAULT NEXTVAL('seq_task_entries_id'),
   task_id int NOT NULL REFERENCES tasks(task_id),
-  duration double precision NOT NULL,
+  duration double precision DEFAULT 0,
   start_time date,
   created_at date NOT NULL,
   updated_at date 
 );
+
+INSERT INTO users (username, password, email, created_at, updated_at) VALUES ('admin', 'admin', 'email@admin.com', NOW(), NOW());
+INSERT INTO customers (company, address, city, state, zip, created_at, updated_at) VALUES ('Test Customer', '1 Miranova Place', 'Columbus', 'OH', 43201, NOW(), NOW());
+INSERT INTO projects (project_name, customer_id, created_at, updated_at) VALUES ('Test Project', 1, NOW(), NOW());
+INSERT INTO tasks (project_id, user_id, task_name, created_at, updated_at) VALUES (1, 1, 'Test Task', NOW(), NOW());
+INSERT INTO task_entries (task_id, duration, start_time, created_at, updated_at) VALUES (1, 10, NOW(), NOW(), NOW());
+INSERT INTO task_entries (task_id, start_time, created_at, updated_at) VALUES (1, NOW(), NOW(), NOW());
 
 COMMIT;
