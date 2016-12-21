@@ -2,6 +2,8 @@
 
 <c:import url="/WEB-INF/jsp/common/header.jsp" />
 
+<c:import url="/WEB-INF/jsp/common/side-nav.jsp" />
+
 <div class="jumbotron">
 	<h1>Enter new project</h1>
 	
@@ -14,7 +16,11 @@
 				</li>
 				<li>
 					<label for="customerName">Select Customer:</label>
-					<input type="text" name="customerName" />
+					<select name="customerName" id="customer-name">
+					<c:forEach var="customer" items="${ customerList }">
+						<option value="${ customer.customerId }">${ customer.company }</option>
+					</c:forEach>
+					</select>
 				</li>
 				<li>
 					<button type="submit" class="btn btn-default">Submit</button>

@@ -27,5 +27,11 @@
 		</ul>
 
 	</div>
+	
+	<h2>User:</h2>
+	<p>User: ${ currentUser.username }</p>
+	<p>Email: ${ currentUser.email }</p>
+	<p>Created: ${ currentUser.createdAt }</p>
+	<p>Last updated: ${ currentUser.updatedAt }</p>
 
 </div>

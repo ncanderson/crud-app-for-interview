@@ -100,9 +100,14 @@ public class UserController {
 		return "redirect:/user-home";
 	}
 	
-	@RequestMapping(path="/new-projects", method=RequestMethod.GET)
-	public String enterNewProject() {
-		return null;
+	@RequestMapping(path="/new-project", method=RequestMethod.GET)
+	public String enterNewProject(HttpServletRequest request) {
+		
+		List<Customer> customerList = customerDAO.getAllCustomers();
+		
+		request.setAttribute("customerList", customerList);
+		
+		return "new-project";
 	}
 	
 	@RequestMapping(path="/view-project-details", method=RequestMethod.GET)

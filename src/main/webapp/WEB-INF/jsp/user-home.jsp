@@ -5,18 +5,13 @@
 <c:import url="/WEB-INF/jsp/common/side-nav.jsp" />
 
 <div class="jumbotron">
-	<h2>User:</h2>
-	<p>User: ${ currentUser.username }</p>
-	<p>Email: ${ currentUser.email }</p>
-	<p>Created: ${ currentUser.createdAt }</p>
-	<p>Last updated: ${ currentUser.updatedAt }</p>
 	
 	<h2>Your current tasks:</h2>
 	<c:forEach var="task" items="${ userTasks }">
 		<p>Task: ${ task.taskName }</p>
 		<p>From project: ${ task.projectName }</p>
 		<form action="start-timer" method="POST">
-			<button type="submit" class="btn btn-default" class="start-timer">Submit</button>
+			<button type="submit" class="btn btn-default" class="start-timer">Start/End time</button>
 			<input type="hidden" name="taskId" value="${ task.taskId }" />
 			<input type="hidden" name="CSRF_TOKEN" value="${ CSRF_TOKEN }" />
 			<input type="hidden" name="destination" value="${ param.destination }" />	
