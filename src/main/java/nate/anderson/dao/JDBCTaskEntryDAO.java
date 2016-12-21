@@ -1,5 +1,7 @@
 package nate.anderson.dao;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,11 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		
 		List<TaskEntry> taskEntries = getTaskEntriesByTask(task);
 		
+		for (TaskEntry taskEntry : taskEntries) {
+			if (timerStarted(taskEntry)) {
+				finishTaskEntry(taskEntry);
+			}
+		}
 		String sqlQuery = "";
 	}
 	
@@ -67,9 +74,9 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 			taskEntry.setTaskId(results.getInt("task_id"));
 			taskEntry.setDuration(results.getDouble("duration"));
 			taskEntry.setNote(results.getString("note"));
-			taskEntry.setStartTime(results.getDate("start_time").toLocalDate());
-			taskEntry.setCreatedAt(results.getDate("created_at").toLocalDate());
-			taskEntry.setUpdatedAt(results.getDate("updated_at").toLocalDate());
+			taskEntry.setStartTime(results.getTimestamp("start_time").toLocalDateTime());
+			taskEntry.setCreatedAt(results.getTimestamp("created_at").toLocalDateTime());
+			taskEntry.setUpdatedAt(results.getTimestamp("updated_at").toLocalDateTime());
 			taskEntries.add(taskEntry);
 		}
 		
@@ -83,6 +90,24 @@ public class JDBCTaskEntryDAO implements TaskEntryDAO {
 		else {
 			return true;
 		}
+	}
+	
+	private void finishTaskEntry(TaskEntry taskEntry) {
+		
+		LocalDateTime finishTime = LocalDateTime.now();
+		double duration = calculateDurationInMinutes(taskEntry.getStartTime(), finishTime);
+		
+		String sqlQuery = "UPDATE task_entries " +
+						  "SET updated_at = ?, " +
+						  	  "duration = ? " + 
+						  "WHERE task_entries_id = ?";
+		
+		jdbcTemplate.update(sqlQuery, finishTime, duration, taskEntry.getTaskEntryId());
+	}
+	
+	private double calculateDurationInMinutes(LocalDateTime start, LocalDateTime end) {
+		
+		return start.until(end, ChronoUnit.MINUTES);
 	}
 }
 

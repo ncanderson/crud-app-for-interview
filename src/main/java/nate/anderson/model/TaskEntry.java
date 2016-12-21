@@ -1,6 +1,7 @@
 package nate.anderson.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskEntry {
 
@@ -8,9 +9,9 @@ public class TaskEntry {
 	private int taskId;
 	private double duration;
 	private String note;
-	private LocalDate startTime;
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+	private LocalDateTime startTime;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	
 	public int getTaskEntryId() {
 		return taskEntryId;
@@ -36,22 +37,22 @@ public class TaskEntry {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public LocalDate getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(LocalDate startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
-	public LocalDate getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(LocalDate createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-	public LocalDate getUpdatedAt() {
+	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(LocalDate updatedAt) {
+	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	
