@@ -163,6 +163,24 @@ public class UserController {
 		return "create-new-task";
 	}
 	
+	@RequestMapping(path="/create-new-task", method=RequestMethod.POST)
+	public String addNewTaskToProject(ModelMap model,
+									  @RequestParam int projectId,
+									  @RequestParam String taskName) {
+		
+		User user = (User) model.get("currentUser");
+		
+		Task task = new Task();
+		
+		task.setProjectId(projectId);
+		task.setUserId(user.getUserId());
+		task.setTaskName(taskName);
+		
+		taskDAO.addNewTask(task);
+		
+		return "redirect:/user-home";
+	}
+	
 }
 
 

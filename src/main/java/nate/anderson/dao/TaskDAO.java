@@ -13,4 +13,6 @@ public interface TaskDAO {
 	public List<Task> getTasksByUser(User user);
 	
 	public Task getTaskById(int id);
+	
+	public void addNewTask(Task task);
 }

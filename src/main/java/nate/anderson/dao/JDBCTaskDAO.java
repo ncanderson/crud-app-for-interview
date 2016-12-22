@@ -75,6 +75,16 @@ public class JDBCTaskDAO implements TaskDAO {
 		return task;
 	}
 	
+	@Override
+	public void addNewTask(Task task) {
+		
+		String sqlQuery = "INSERT INTO tasks " +
+						  "(project_id, user_id, task_name, created_at, updated_at) " +
+						  "VALUES (?, ?, ?, NOW(), NOW())";
+		
+		jdbcTemplate.update(sqlQuery, task.getProjectId(), task.getUserId(), task.getProjectName());
+	}
+	
 	private List<Task> mapResultsToTask(SqlRowSet results) {
 		List<Task> taskList = new ArrayList<Task>();
 		
